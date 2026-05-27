@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VietFR Live — Traduction Vietnamien → Français</title>
+  <meta name="description" content="Traduction en temps réel du vietnamien vers le français avec lecture vocale. Gratuit avec Groq AI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="brand">
+      <div class="brand-flags">
+        <div class="flag-vi">VI</div>
+        <div class="flag-arr"><i class="ti ti-arrow-right"></i></div>
+        <div class="flag-fr">FR</div>
+      </div>
+      <div class="brand-title">Viet<em>·</em>FR <span class="brand-sub">Live</span></div>
+      <div class="groq-badge">GROQ · GRATUIT</div>
+    </div>
+    <div class="sorb" id="sorb"><div class="orb"></div><span id="slbl">Idle</span></div>
+  </header>
+
+  <!-- API KEY BAR -->
+  <div class="keybar" id="keybar">
+    <i class="ti ti-key"></i>
+    <div class="keybar-text">
+      <strong>Clé API Groq requise.</strong> Gratuit sur
+      <a href="https://console.groq.com" target="_blank" rel="noopener">console.groq.com</a>
+      → API Keys → Create. Collez-la ici — jamais dans le chat.
+    </div>
+    <div class="keybar-field">
+      <input class="ki" type="password" id="api-key" placeholder="gsk_…" autocomplete="off" />
+      <button class="ks" id="save-key">Enregistrer</button>
+      <div class="key-ok" id="key-ok"><i class="ti ti-check"></i> Prêt</div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="stage">
+    <div class="stage-left">
+      <div class="stage-eyebrow">Traduction en temps réel</div>
+      <h1 class="stage-heading">Parlez vietnamien,<br>écoutez-le en <em>français.</em></h1>
+      <div class="stage-sub">
+        <span class="free-chip">100% GRATUIT</span>
+        Groq AI · Web Speech API · Lecture vocale
+      </div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-n" id="k-segs">0</div><div class="kpi-l">Segments</div></div>
+      <div class="kpi"><div class="kpi-n" id="k-words">0</div><div class="kpi-l">Mots FR</div></div>
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <button class="btn btn-main" id="btn-start"><i class="ti ti-microphone"></i> Écouter</button>
+    <button class="btn btn-stop" id="btn-stop" style="display:none"><i class="ti ti-player-stop"></i> Arrêter</button>
+    <div class="sep"></div>
+    <button class="btn" id="btn-clear" disabled><i class="ti ti-trash"></i> Effacer</button>
+    <div class="ctrl-r">
+      <button class="btn" id="btn-read-all" disabled><i class="ti ti-volume"></i> Tout lire</button>
+      <button class="btn" id="btn-copy" disabled><i class="ti ti-copy"></i> Copier FR</button>
+      <button class="btn" id="btn-export" disabled><i class="ti ti-download"></i> Exporter</button>
+    </div>
+  </div>
+
+  <!-- PANELS -->
+  <div class="panels">
+    <div class="panel">
+      <div class="panel-head">
+        <div class="ph-l">
+          <div class="ph-pill pill-vi">Tiếng Việt</div>
+          <div>
+            <div class="ph-name">Vietnamien</div>
+            <div class="ph-sub">Transcription en direct</div>
+          </div>
+        </div>
+        <div class="ph-r">
+          <button class="ibtn" id="cpy-vi" title="Copier"><i class="ti ti-copy"></i></button>
+        </div>
+      </div>
+      <div class="panel-body" id="vi-body"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div class="ph-l">
+          <div class="ph-pill pill-fr">Français</div>
+          <div>
+            <div class="ph-name">Français</div>
+            <div class="ph-sub">Traduction automatique</div>
+          </div>
+        </div>
+        <div class="ph-r">
+          <button class="ibtn" id="cpy-fr" title="Copier"><i class="ti ti-copy"></i></button>
+          <button class="ibtn" id="tts-last" title="Lire le dernier"><i class="ti ti-volume"></i></button>
+          <button class="auto-btn" id="auto-btn">AUTO</button>
+        </div>
+      </div>
+      <div class="panel-body" id="fr-body"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-l">
+      <div class="fst"><i class="ti ti-circle-check"></i> Groq AI · <b>Gratuit</b></div>
+      <div class="fst"><i class="ti ti-microphone"></i> Web Speech API · <b>Gratuit</b></div>
+      <div class="fst"><i class="ti ti-volume"></i> Text-to-speech · <b>Gratuit</b></div>
+      <div class="fst"><i class="ti ti-browser"></i> Chrome / Edge requis</div>
+    </div>
+    <div class="footer-r">🇻🇳 → 🇫🇷 Temps réel</div>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast-wrap" id="toast-wrap">
+    <div class="toast"><i class="ti ti-check"></i><span id="toast-txt"></span></div>
+  </div>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>
