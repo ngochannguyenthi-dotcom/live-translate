@@ -41,3 +41,4 @@ vercel
 - `style.css` — all styling
 - `app.js` — all logic
 - `vercel.json` — Vercel deployment config
+
